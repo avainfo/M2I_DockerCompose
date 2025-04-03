@@ -2,9 +2,19 @@ version: "3.9"
 
 services:
   vscode:
-    image: codercom/code-server:latest  # Service VSCode dans le navigateur
+    image: codercom/code-server
     container_name: vscode
+    ports:
+      - "8443:8080"
+    networks:
+      - shared-net # Réseau Docker privé pour la communication
 
   jupyter:
-    image: jupyter/scipy-notebook  # Service Jupyter avec environnement scientifique
+    image: jupyter/scipy-notebook
     container_name: jupyter
+    ports:
+      - "8888:8888"
+    networks:
+      - shared-net # Même réseau que vscode
+networks:
+  shared-net: # Réseau privé Docker, permet aux conteneurs de communiquer via leurs noms
