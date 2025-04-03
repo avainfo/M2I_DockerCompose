@@ -7,7 +7,10 @@ services:
     ports:
       - "8443:8080"
     networks:
-      - shared-net # Réseau Docker privé pour la communication
+      - shared-net
+    volumes:
+      - shared-data:/shared  # Dossier commun monté dans /shared
+      - vscode-data:/home/coder/.local/share/code-server
 
   jupyter:
     image: jupyter/scipy-notebook
@@ -15,6 +18,14 @@ services:
     ports:
       - "8888:8888"
     networks:
-      - shared-net # Même réseau que vscode
+      - shared-net
+    volumes:
+      - shared-data:/shared  # Même point de montage côté Jupyter
+      - jupyter-data:/home/data
 networks:
-  shared-net: # Réseau privé Docker, permet aux conteneurs de communiquer via leurs noms
+  shared-net:
+
+volumes:
+  shared-data:  # Volume partagé
+  vscode-data:  # Données persistantes de VSCode (config, extensions)
+  jupyter-data:  # Données persistantes de Jupyter (notebooks)
