@@ -1,1 +1,10 @@
 version: "3.9"
+
+services:
+  vscode:
+    image: codercom/code-server:latest  # Service VSCode dans le navigateur
+    container_name: vscode
+
+  jupyter:
+    image: jupyter/scipy-notebook  # Service Jupyter avec environnement scientifique
+    container_name: jupyter
